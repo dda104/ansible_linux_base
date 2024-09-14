@@ -1,0 +1,11 @@
+---
+version: '3'
+
+includes:
+  dev: go-tasks/development.yml
+
+tasks:
+  default:
+    desc: Install usage dependencies
+    cmds:
+      - task: dev:install-dependencies-usage
