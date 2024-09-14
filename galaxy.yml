@@ -1,0 +1,28 @@
+---
+namespace: dda104
+name: linux_base
+version: 1.0.0
+readme: README.md
+authors:
+  - Denis Dvornikov
+
+description: This collection offers a set of roles for managing Linux systems
+license:
+  - Unlicense
+license_file: LICENSE
+tags:
+  - linux
+  - linux_base
+  - users
+  - packages
+  - cockpit
+  - firewalld
+dependencies: {}
+repository: https://gitlab.com/ansible_public/dda104.linux_base
+build_ignore:
+  - go-tasks
+  - requirements
+  - .gitignore
+  - .gitlab-ci.yml
+  - .yamllint
+  - taskfile.yml

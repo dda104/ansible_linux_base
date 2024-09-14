@@ -1,0 +1,21 @@
+---
+driver:
+  name: podman
+platforms:
+  - name: fedora
+    image: docker.io/fedora:40
+  - name: ubuntu
+    image: docker.io/ubuntu:24.04
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+scenario:
+  name: default
+  test_sequence:
+    - create
+    - converge
+    - verify
+    - destroy
+verifier:
+  name: testinfra

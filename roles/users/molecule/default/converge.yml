@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: users
+  vars:
+    users_list:
+      - name: user1
+      - name: user2
+        sudo: true
+      - name: user3
+        state: absent
+      - name: user4
+        uid: 1999

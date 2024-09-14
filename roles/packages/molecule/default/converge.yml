@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: packages
+  vars:
+    packages_skip_upgrade: false
+    packages_list:
+      - name: vim
+        state: absent
+      - name: git
