@@ -1,0 +1,35 @@
+---
+- name: Configure cockpit
+  become: true
+  block:
+    - name: Install cockpit
+      ansible.builtin.package:
+        name: cockpit
+        state: present
+        update_cache: true
+
+    - name: Start and enable cockpit
+      ansible.builtin.service:
+        name: cockpit
+        enabled: true
+        state: started
+
+    - name: Create the directory for the certificates
+      ansible.builtin.file:
+        path: "{{ cockpit_cert_dir }}"
+        state: directory
+        mode: "0644"
+
+    - name: Create certificates
+      when:
+        - not cockpit_cert_key is none
+        - not cockpit_cert_crt is none
+      ansible.builtin.copy:
+        content: "{{ item.content }}"
+        dest: "{{ cockpit_cert_dir }}/{{ item.dest }}"
+        mode: "0644"
+      loop:
+        - content: "{{ cockpit_cert_key }}"
+          dest: cert.key
+        - content: "{{ cockpit_cert_crt }}"
+          dest: cert.crt

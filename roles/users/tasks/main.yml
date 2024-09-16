@@ -1,0 +1,30 @@
+---
+- name: Manage users
+  become: true
+  block:
+    - name: Create and delete users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        password: "{{ item.password if item.password is defined else omit }}"
+        state: "{{ item.state | default('present') }}"
+        uid: "{{ item.uid if item.uid is defined else omit }}"
+      loop: "{{ users_list }}"
+
+    - name: Add user sudo
+      when:
+        - item.sudo | default(false)
+        - item.state | default('present') == 'present'
+      ansible.builtin.copy:
+        content: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
+        dest: "/etc/sudoers.d/{{ item.name }}"
+        mode: "0440"
+      loop: "{{ users_list }}"
+
+    - name: Remove user sudo
+      when: >
+        not item.sudo | default(false) or
+        item.state | default('present') == 'absent'
+      ansible.builtin.file:
+        dest: "/etc/sudoers.d/{{ item.name }}"
+        state: absent
+      loop: "{{ users_list }}"

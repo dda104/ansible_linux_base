@@ -1,0 +1,205 @@
+---
+version: '3'
+
+tasks:
+  install-dependencies-*:
+    desc: Install dependencies
+    platforms:
+      - linux
+      - darwin
+    vars:
+      REQUIREMENTS: '{{index .MATCH 0}}'
+    cmds:
+      - sh -c '[[ -f requirements/{{.REQUIREMENTS}}.txt ]] || echo "File requirements/{{.REQUIREMENTS}}.txt not found" && exit 1'
+      - pip install -r requirements/{{.REQUIREMENTS}}.txt
+    silent: true
+
+  update-dependencies-*:
+    desc: Update dependencies
+    platforms:
+      - linux
+      - darwin
+    vars:
+      VAR: '{{index .MATCH 0}}'
+    cmds:
+      - pur -r requirements/{{.REQUIREMENTS}}.txt
+    deps:
+      - install-dependencies-{{.REQUIREMENTS}}
+    silent: true
+
+  update-dependencies:
+    desc: Update dependencies
+    platforms:
+      - linux
+      - darwin
+    deps:
+      - update-dependencies-usage
+      - update-dependencies-lints
+      - update-dependencies-tests
+      - update-dependencies-dev
+    silent: true
+
+  changelog:
+    vars:
+      VERSION: 
+        sh: cat .release
+    cmds:
+      - |
+        [ -f CHANGELOG.md ] && old_changes=$(sed '1,2d' CHANGELOG.md)
+        last_tag={{.VERSION}}
+        {
+          echo "# Changelog"
+          echo
+          echo "## Version ${last_tag} $(date +'%Y-%m-%d')"
+          echo
+        } > CHANGELOG.md
+
+        git log --format=%s $(git rev-list --all --not $(git rev-list --tags --no-walk)) | awk '{ print "- " $0 }' >> CHANGELOG.md
+
+        {
+          echo
+          echo "---"
+        } >> CHANGELOG.md
+        [ -n "$old_changes" ] && echo -e "\n$old_changes" >> CHANGELOG.md || true
+  silent: true
+
+
+  create-role-*:
+    desc: Create a new role
+    platforms:
+      - linux
+      - darwin
+    vars:
+      ROLE: '{{index .MATCH 0}}'
+      VERSION: 
+        sh: cat .release
+    cmds:
+      - cmd: mkdir -p roles/{{.ROLE}}/{defaults,meta,tasks}
+      - cmd: echo -e '---' | tee > roles/{{.ROLE}}/tasks/main.yml roles/{{.ROLE}}/defaults/main.yml
+      - cmd: mkdir -p roles/{{.ROLE}}/molecule/default/tests
+      - cmd: |
+          cat <<EOF > roles/{{.ROLE}}/meta/main.yml
+          ---
+          dependencies: []
+
+          galaxy_info:
+            role_name: {{.ROLE}}
+            description: {{.ROLE}}
+            company: ""
+            namespace: dda104
+            license: Unlicense
+            min_ansible_version: "2.11"
+            author: Denis Dvornikov
+            galaxy_tags:
+              - linux
+              - {{.ROLE}}
+          EOF
+      - cmd: |
+          cat <<EOF > roles/{{.ROLE}}/meta/argument_specs.yml
+          ---
+          argument_specs:
+            main:
+              short_description: {{.ROLE}}
+              version_added: {{.VERSION}}
+              author: Denis Dvornikov
+              options:
+          EOF
+      - cmd: |
+          cat <<EOF > roles/{{.ROLE}}/molecule/default/molecule.yml
+          ---
+          driver:
+            name: podman
+          platforms:
+            - name: fedora-{{.ROLE}}
+              image: docker.io/geerlingguy/docker-fedora40-ansible:latest
+              volumes:
+                - /sys/fs/cgroup:/sys/fs/cgroup:rw
+              cgroupns_mode: host
+              command: /usr/sbin/init
+              privileged: true
+              pre_build_image: true
+            - name: ubuntu-{{.ROLE}}
+              image: docker.io/geerlingguy/docker-ubuntu2404-ansible:latest
+              volumes:
+                - /sys/fs/cgroup:/sys/fs/cgroup:rw
+              cgroupns_mode: host
+              command: /usr/sbin/init
+              privileged: true
+              pre_build_image: true
+          provisioner:
+            name: ansible
+            playbooks:
+              converge: converge.yml
+          scenario:
+            name: default
+            test_sequence:
+              - destroy
+              - create
+              - converge
+              - idempotence
+              - verify
+              - destroy
+          verifier:
+            name: testinfra
+          EOF
+      - cmd: |
+          cat <<EOF > roles/{{.ROLE}}/molecule/default/converge.yml
+          ---
+          - name: Converge
+            hosts: all
+            tasks:
+              - name: Include role
+                ansible.builtin.include_role:
+                  name: {{.ROLE}}
+          EOF
+      - cmd: |
+          cat <<EOF > roles/{{.ROLE}}/molecule/default/tests/test_default.py
+          import os
+          import testinfra.utils.ansible_runner
+
+          testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
+              os.environ['MOLECULE_INVENTORY_FILE']
+          ).get_hosts('all')
+          EOF
+      - cmd: ansible-doctor roles/{{.ROLE}}
+    silent: true
+    status:
+      - ls roles/{{.ROLE}}
+
+  lints:
+    desc: Run linters
+    platforms:
+      - linux
+      - darwin
+    deps:
+      - lint-ansible-lint
+      - lint-yamllint
+    silent: true
+
+  lint-*:
+    desc: Run specific linter
+    platforms:
+      - linux
+      - darwin
+    vars:
+      LINTER: '{{index .MATCH 0}}'
+    cmds:
+      - '{{.LINTER}} .'
+    deps:
+      - install-dependencies-lints
+    silent: true
+
+  molecule-test-*:
+    desc: Run molecule tests for a specific role
+    platforms:
+      - linux
+      - darwin
+    vars:
+      ROLE: '{{index .MATCH 0}}'
+    dir: '{{.TASKFILE_DIR}}/roles/{{.ROLE}}'
+    cmds:
+      - cmd: molecule test
+    deps:
+      - install-dependencies-usage
+      - install-dependencies-tests
+    silent: true

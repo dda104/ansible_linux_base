@@ -1,0 +1,14 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: firewalld
+  description: Role for configure firewalld
+  company: ""
+  namespace: internal
+  license: Unlicense
+  min_ansible_version: "2.11"
+  author: Denis Dvornikov
+  galaxy_tags:
+    - linux
+    - firewalld
