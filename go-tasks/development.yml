@@ -39,6 +39,31 @@ tasks:
       - update-dependencies-dev
     silent: true
 
+  changelog:
+    vars:
+      VERSION: 
+        sh: cat .release
+    cmds:
+      - |
+        [ -f CHANGELOG.md ] && old_changes=$(sed '1,2d' CHANGELOG.md)
+        last_tag={{.VERSION}}
+        {
+          echo "# Changelog"
+          echo
+          echo "## Version ${last_tag} $(date +'%Y-%m-%d')"
+          echo
+        } > CHANGELOG.md
+
+        git log --format=%s $(git rev-list --all --not $(git rev-list --tags --no-walk)) | awk '{ print "- " $0 }' >> CHANGELOG.md
+
+        {
+          echo
+          echo "---"
+        } >> CHANGELOG.md
+        [ -n "$old_changes" ] && echo -e "\n$old_changes" >> CHANGELOG.md || true
+  silent: true
+
+
   create-role-*:
     desc: Create a new role
     platforms:
@@ -46,6 +71,8 @@ tasks:
       - darwin
     vars:
       ROLE: '{{index .MATCH 0}}'
+      VERSION: 
+        sh: cat .release
     cmds:
       - cmd: mkdir -p roles/{{.ROLE}}/{defaults,meta,tasks}
       - cmd: echo -e '---' | tee > roles/{{.ROLE}}/tasks/main.yml roles/{{.ROLE}}/defaults/main.yml
@@ -73,7 +100,7 @@ tasks:
           argument_specs:
             main:
               short_description: {{.ROLE}}
-              version_added: 1.0.0
+              version_added: {{.VERSION}}
               author: Denis Dvornikov
               options:
           EOF
