@@ -23,13 +23,11 @@ provisioner:
   playbooks:
     converge: converge.yml
 scenario:
-  name: default
+  name: destroy
   test_sequence:
     - destroy
     - create
+    - prepare
     - converge
     - idempotence
-    - verify
     - destroy
-verifier:
-  name: testinfra

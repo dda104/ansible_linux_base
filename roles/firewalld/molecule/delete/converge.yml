@@ -4,4 +4,7 @@
   tasks:
     - name: Include role
       ansible.builtin.include_role:
-        name: cockpit
+        name: firewalld
+  vars:
+    firewalld_enabled: false
+    firewalld_reboot_machine: false

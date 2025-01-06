@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+# /etc/cockpit/disallowed-users
+# List of users which are not allowed to login to Cockpit
+{% for user in cockpit_disabled_users_login -%}
+{{ user }}
+{% endfor %}

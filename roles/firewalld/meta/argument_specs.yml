@@ -13,11 +13,11 @@ argument_specs:
         description: List of ports to manage
         type: list
         elements: dict
+        default: []
         options:
           port:
             description: Port number
             type: str
-            required: true
           permanent:
             description: Whether the rule should be permanent
             type: bool
@@ -29,3 +29,7 @@ argument_specs:
               - enabled
               - disabled
             default: enabled
+      firewalld_reboot_machine:
+        description: Reboot machine on handler
+        type: bool
+        default: true

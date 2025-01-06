@@ -5,3 +5,5 @@
     - name: Include role
       ansible.builtin.include_role:
         name: cockpit
+  vars:
+    cockpit_destroy: true

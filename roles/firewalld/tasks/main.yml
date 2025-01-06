@@ -12,6 +12,7 @@
         name: firewalld
         state: "{{ firewalld_enabled | ternary('started', 'stopped') }}"
         enabled: "{{ firewalld_enabled }}"
+      notify: Restart machine
 
     - name: Manage ports
       when: firewalld_enabled

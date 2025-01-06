@@ -9,3 +9,4 @@
     firewalld_enabled: true
     firewalld_ports_list:
       - port: 666/tcp
+    firewalld_reboot_machine: false

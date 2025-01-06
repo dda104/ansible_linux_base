@@ -8,6 +8,7 @@ Role for configure firewalld
 - [Default Variables](#default-variables)
   - [firewalld_enabled](#firewalld_enabled)
   - [firewalld_ports_list](#firewalld_ports_list)
+  - [firewalld_reboot_machine](#firewalld_reboot_machine)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -33,7 +34,15 @@ firewalld_enabled: false
 #### Default value
 
 ```YAML
-firewalld_ports_list:
+firewalld_ports_list: []
+```
+
+### firewalld_reboot_machine
+
+#### Default value
+
+```YAML
+firewalld_reboot_machine: true
 ```
 
 
