@@ -1,2 +1,0 @@
-pur==7.3.2
-ansible-doctor==6.0.2

@@ -1,0 +1,5 @@
+---
+- name: Restart machine
+  when: selinux_reboot_machine
+  ansible.builtin.reboot:
+    reboot_timeout: 300
