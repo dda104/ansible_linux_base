@@ -1,10 +1,9 @@
 ---
-dependencies:
-  - dda104.linux_base.pre_ansible
+dependencies: []
 
 galaxy_info:
-  role_name: packages
-  description: Role for install and upgrade packages on Linux systems
+  role_name: pre_ansible
+  description: Role for prepare Linux systems
   company: ""
   namespace: internal
   license: Unlicense
@@ -12,4 +11,3 @@ galaxy_info:
   author: Denis Dvornikov
   galaxy_tags:
     - linux
-    - packages

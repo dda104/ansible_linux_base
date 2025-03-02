@@ -44,7 +44,7 @@ packages_skip_upgrade: true
 
 ## Dependencies
 
-None.
+- dda104.linux_base.pre_ansible
 
 ## License
 

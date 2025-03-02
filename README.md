@@ -1,27 +1,25 @@
-# Ansible Collection - internal.linux_base
+# Collection dda104.linux_base
 
-This collection offers a set of roles for managing Linux systems:
+## Prepare
 
-- The users role manages user accounts.
-- The packages role handles package management.
-- The firewalld role manages the firewalld service.
-- The cockpit role manages the cockpit service.
+Install tools via [asdf](https://asdf-vm.com):
 
-## Install dependencies
+```shell
+cat .tool-versions | awk '{print $1}' | xargs -i asdf plugin add {}
+asdf install
+```
 
-1. Install Go task. [Installation guide](https://taskfile.dev/installation/)
+Prepare direnv:
 
-2. Create a virtual environment and activate it:
+```shell
+# direnv hook $SHELL >> ~/.<shellrc>
+direnv hook $SHELL >> ~/.bashrc
 
-    ```bash
-    ls .venv || python3 -m venv .venv
-    [ -n VIRTUAL_ENV ] && source .venv/bin/activate
-    ```
+direnv allow
+```
 
-3. install the dependencies:
+Install dependencies:
 
-    ```bash
-    task
-    ```
-
----
+```shell
+task
+```
