@@ -1,7 +1,5 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: Include role
-      ansible.builtin.include_role:
-        name: pre_ansible
+  roles:
+    - pre_ansible

@@ -1,0 +1,33 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+
+    - name: Gather the service facts
+      ansible.builtin.service_facts:
+
+    - name: Check firewalld package
+      ansible.builtin.assert:
+        that: "'firewalld' in ansible_facts.packages"
+        success_msg: Success firewalld is installed
+        fail_msg: Failed firewalld is not installed
+
+    - name: Check firewalld service existence
+      ansible.builtin.assert:
+        that: "'firewalld.service' in ansible_facts.services"
+        success_msg: "Success: firewalld service exists"
+        fail_msg: "Failed: firewalld service does not exist"
+
+    - name: Check firewalld service is running
+      ansible.builtin.assert:
+        that: "ansible_facts.services['firewalld.service'].state == 'inactive'"
+        success_msg: "Success: firewalld service is not running"
+        fail_msg: "Failed: firewalld service is running"
+
+    - name: Check firewalld service is enabled
+      ansible.builtin.assert:
+        that: "ansible_facts.services['firewalld.service'].status == 'disabled'"
+        success_msg: "Success: firewalld service is not enabled"
+        fail_msg: "Failed: firewalld service is enabled"

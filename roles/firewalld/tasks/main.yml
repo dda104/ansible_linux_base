@@ -2,11 +2,6 @@
 - name: Configure firewalld
   become: true
   block:
-    - name: Install firewalld
-      ansible.builtin.package:
-        name: firewalld
-        state: present
-
     - name: Manage firewalld service
       ansible.builtin.service:
         name: firewalld

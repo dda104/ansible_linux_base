@@ -25,9 +25,19 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      stdout_callback: yaml
+      result_format: yaml
+      callbacks_enabled: profile_tasks
+      gathering: "smart"
+      fact_caching: jsonfile
+      fact_caching_connection: "./.facts"
+      fact_caching_timeout: 86400
+      forks: 20
+  env:
+    ANSIBLE_ROLES_PATH: "../../../"
+    ANSIBLE_PIPELINING: true
   playbooks:
     converge: converge.yml
+    verify: verify.yml
 
 scenario:
   name: default
@@ -40,4 +50,4 @@ scenario:
     - destroy
 
 verifier:
-  name: testinfra
+  name: ansible

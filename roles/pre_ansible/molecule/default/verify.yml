@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+
+    - name: Include tasks for dnf based systems
+      when: |
+        ansible_pkg_mgr == "dnf5" or
+        ansible_pkg_mgr == "dnf"
+      block:
+        - name: Check python3-libdnf5
+          ansible.builtin.assert:
+            that: "'python3-libdnf5' in ansible_facts.packages"
+            fail_msg: Failed python3-libdnf5 is not installed
+            success_msg: Success python3-libdnf5 is installed
+
+        - name: Check python3-rpm
+          ansible.builtin.assert:
+            that: "'python3-rpm' in ansible_facts.packages"
+            fail_msg: Failed python3-rpm is not installed
+            success_msg: Success python3-rpm is installed

@@ -23,3 +23,10 @@ Install dependencies:
 ```shell
 task
 ```
+
+Install rolecule
+
+```shell
+sudo dnf install https://github.com/z0mbix/rolecule/releases/download/v0.4.0/rolecule_0.
+4.0_linux_amd64.rpm -y
+```
