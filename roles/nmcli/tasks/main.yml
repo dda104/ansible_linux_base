@@ -1,0 +1,11 @@
+---
+- name: Configure NetworkManager connection
+  community.general.nmcli:
+    conn_name: "{{ nmcli_conn_name }}"
+    ifname: "{{ nmcli_ifname }}"
+    type: ethernet
+    state: present
+    ip4: "{{ nmcli_ipv4 }}"
+    gw4: "{{ nmcli_gw4 }}"
+    dns4: "{{ nmcli_dns4 }}"
+  notify: Restart NetworkManager

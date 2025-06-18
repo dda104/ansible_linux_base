@@ -1,0 +1,6 @@
+---
+nmcli_conn_name: "{{ ansible_default_ipv4.interface }}"
+nmcli_ifname: "{{ ansible_default_ipv4.interface }}"
+nmcli_gw4: "192.168.0.1"
+nmcli_dns4: "{{ nmcli_gw4 }}"
+nmcli_restart_network_manager: true

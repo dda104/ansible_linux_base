@@ -1,0 +1,6 @@
+---
+- name: Restart NetworkManager
+  when: nmcli_restart_network_manager
+  ansible.builtin.service:
+    name: NetworkManager
+    state: restarted
