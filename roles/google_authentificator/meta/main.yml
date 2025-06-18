@@ -1,0 +1,19 @@
+---
+dependencies:
+  - role: dda104.linux_base.pre_ansible
+  - role: dda104.linux_base.packages
+    vars:
+      packages_list:
+        - name: google-authenticator
+
+galaxy_info:
+  role_name: google_authenticator
+  description: Role for configure auth via google_authenticator
+  company: ""
+  namespace: internal
+  license: Unlicense
+  min_ansible_version: "2.11"
+  author: Denis Dvornikov
+  galaxy_tags:
+    - linux
+    - authenticator

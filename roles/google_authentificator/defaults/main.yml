@@ -1,0 +1,4 @@
+---
+google_authentificator_user: user
+google_authentificator_user_home: /home/{{ google_authentificator_user }}
+google_authentificator_ssh_allow_additional_users:
