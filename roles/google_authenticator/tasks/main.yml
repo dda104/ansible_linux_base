@@ -8,29 +8,27 @@
   when: not _google_authenticator_file.stat.exists
   ansible.builtin.shell: |
     google-authenticator -C -f -t -D -q -r 3 -R 30 -W -s {{ google_authenticator_user_home }}/.ssh/.google_authenticator
+    chmod 0600 {{ google_authenticator_user_home }}/.ssh/.google_authenticator
+    chown {{ google_authenticator_user }}:{{ google_authenticator_user }} {{ google_authenticator_user_home }}/.ssh/.google_authenticator
   tags: skip_ansible_lint
 
 - name: Add google auth in pam.d
   ansible.builtin.lineinfile:
     path: /etc/pam.d/sshd
     regexp: '^auth\s+substack\s+password-auth'
-    line: |
-      auth [success=1 default=ignore] pam_succeed_if.so user != {{ google_authenticator_user }}
-      auth required pam_google_authenticator.so secret=/home/${USER}/.ssh/.google_authenticator
+    line: auth required pam_google_authenticator.so secret=/home/${USER}/.ssh/.google_authenticator
 
 - name: Setup sshd
   ansible.builtin.copy:
     content: |
       AllowUsers {{ google_authenticator_user }} {{ google_authenticator_ssh_allow_additional_users }}
-      PasswordAuthentication no
-      ChallengeResponseAuthentication no
-      AuthenticationMethods publickey
 
       Match User {{ google_authenticator_user }}
           AuthenticationMethods keyboard-interactive
-          PasswordAuthentication no
           PubkeyAuthentication no
           ChallengeResponseAuthentication yes
+
+      {{ google_authenticator_additional_ssh_config }}
     dest: /etc/ssh/sshd_config.d/auth.conf
     mode: '0600'
   notify: Restart sshd
