@@ -1,13 +1,13 @@
 ---
-- name: Check google authentificator file
+- name: Check google authenticator file
   ansible.builtin.stat:
-    path: "{{ google_authentificator_user_home }}/.ssh/.google_authenticator"
-  register: _google_authentificator_file
+    path: "{{ google_authenticator_user_home }}/.ssh/.google_authenticator"
+  register: _google_authenticator_file
 
-- name: Generate token for authentificator
-  when: not _google_authentificator_file.stat.exists
+- name: Generate token for authenticator
+  when: not _google_authenticator_file.stat.exists
   ansible.builtin.shell: |
-    google-authenticator -C -f -t -D -q -r 3 -R 30 -W -s {{ google_authentificator_user_home }}/.ssh/.google_authenticator
+    google-authenticator -C -f -t -D -q -r 3 -R 30 -W -s {{ google_authenticator_user_home }}/.ssh/.google_authenticator
   tags: skip_ansible_lint
 
 - name: Add google auth in pam.d
@@ -15,18 +15,18 @@
     path: /etc/pam.d/sshd
     regexp: '^auth\s+substack\s+password-auth'
     line: |
-      auth [success=1 default=ignore] pam_succeed_if.so user != {{ google_authentificator_user }}
+      auth [success=1 default=ignore] pam_succeed_if.so user != {{ google_authenticator_user }}
       auth required pam_google_authenticator.so secret=/home/${USER}/.ssh/.google_authenticator
 
 - name: Setup sshd
   ansible.builtin.copy:
     content: |
-      AllowUsers {{ google_authentificator_user }} {{ google_authentificator_ssh_allow_additional_users }}
+      AllowUsers {{ google_authenticator_user }} {{ google_authenticator_ssh_allow_additional_users }}
       PasswordAuthentication no
       ChallengeResponseAuthentication no
       AuthenticationMethods publickey
 
-      Match User {{ google_authentificator_user }}
+      Match User {{ google_authenticator_user }}
           AuthenticationMethods keyboard-interactive
           PasswordAuthentication no
           PubkeyAuthentication no
