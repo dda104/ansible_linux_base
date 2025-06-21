@@ -1,7 +1,7 @@
 ---
 namespace: dda104
 name: linux_base
-version: 1.4.2
+version: 1.4.3
 readme: README.md
 authors:
   - Denis Dvornikov
