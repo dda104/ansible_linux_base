@@ -25,6 +25,7 @@ argument_specs:
 
       packages_snap_list:
         description: List of ansp packages to install
+        version_added: 1.4.4
         type: list
         elements: dict
         default: []
@@ -40,6 +41,10 @@ argument_specs:
               - present
               - absent
             default: present
+          classic:
+            description: Use option classic
+            version_added: 1.4.5
+            type: bool
 
       packages_skip_upgrade:
         description: Upgrade all packages

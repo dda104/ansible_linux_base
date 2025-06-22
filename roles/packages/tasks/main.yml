@@ -21,4 +21,5 @@
   community.general.snap:
     name: "{{ item.name }}"
     state: "{{ item.state | default('present') }}"
+    classic: "{{ item.classic | default(omit) }}"
   with_items: "{{ packages_snap_list }}"
