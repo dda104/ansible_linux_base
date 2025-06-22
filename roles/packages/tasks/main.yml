@@ -17,6 +17,13 @@
     update_cache: true
   with_items: "{{ packages_list }}"
 
+- name: Manage dnf packages
+  community.general.dnf:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    disable_gpg_check: "{{ disable_gpg_check | default(omit) }}"
+  with_items: "{{ packages_dnf_list }}"
+
 - name: Manage snap packages
   community.general.snap:
     name: "{{ item.name }}"
