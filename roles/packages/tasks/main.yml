@@ -19,7 +19,7 @@
       with_items: "{{ packages_list }}"
 
     - name: Manage dnf packages
-      community.general.dnf:
+      ansible.builtin.dnf:
         name: "{{ item.name }}"
         state: "{{ item.state | default('present') }}"
         disable_gpg_check: "{{ disable_gpg_check | default(omit) }}"
