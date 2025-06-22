@@ -22,6 +22,25 @@ argument_specs:
               - present
               - absent
             default: present
+
+      packages_snap_list:
+        description: List of ansp packages to install
+        type: list
+        elements: dict
+        default: []
+        options:
+          name:
+            description: Package name
+            type: str
+            required: true
+          state:
+            description: Package state
+            type: str
+            choices:
+              - present
+              - absent
+            default: present
+
       packages_skip_upgrade:
         description: Upgrade all packages
         type: bool
