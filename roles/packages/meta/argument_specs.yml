@@ -48,7 +48,7 @@ argument_specs:
 
       packages_dnf_list:
         description: List of dnf packages to install
-        version_added: 1.5.5
+        version_added: 1.5.0
         type: list
         elements: dict
         default: []
