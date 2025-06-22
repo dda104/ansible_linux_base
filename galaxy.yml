@@ -5,7 +5,7 @@ version: 1.5.1
 readme: README.md
 authors:
   - Denis Dvornikov
-description: This collection offers a set of roles for managing Linux systems
+description: Collection for managing Linux systems
 license:
   - Unlicense
 tags:
@@ -20,4 +20,4 @@ tags:
   - nmcli
   - authentificator
 dependencies: {}
-repository: https://gitlab.com/ansible_public/dda104.linux_base
+repository: https://gitlab.com/dda104/linux_base
