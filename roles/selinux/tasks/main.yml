@@ -1,5 +1,5 @@
 ---
 - name: Disable SELinux
   ansible.posix.selinux:
-    state: disabled
+    state: "{{ selinux_enabled | ternary('enabled', 'disabled')  }}"
   notify: Restart machine

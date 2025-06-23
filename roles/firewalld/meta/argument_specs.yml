@@ -8,7 +8,8 @@ argument_specs:
       firewalld_enabled:
         description: Whether firewalld should be enabled
         type: bool
-        default: false
+        default: true
+
       firewalld_ports_list:
         description: List of ports to manage
         type: list
@@ -29,7 +30,8 @@ argument_specs:
               - enabled
               - disabled
             default: enabled
+
       firewalld_reboot_machine:
         description: Reboot machine on handler
         type: bool
-        default: true
+        default: false

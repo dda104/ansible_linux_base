@@ -1,4 +1,4 @@
 ---
-firewalld_enabled: false
+firewalld_enabled: true
 firewalld_ports_list: []
-firewalld_reboot_machine: true
+firewalld_reboot_machine: false

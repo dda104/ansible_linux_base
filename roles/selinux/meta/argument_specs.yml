@@ -1,0 +1,16 @@
+---
+argument_specs:
+  main:
+    short_description: Role for selinux
+    version_added: 1.6.0
+    author: Denis Dvornikov
+    options:
+      selinux_enabled:
+        description: Enable selinux
+        type: bool
+        default: true
+
+      selinux_reboot_machine:
+        description: Reboot machine
+        type: bool
+        default: false

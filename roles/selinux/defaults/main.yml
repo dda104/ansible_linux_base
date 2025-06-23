@@ -1,2 +1,3 @@
 ---
-selinux_reboot_machine: true
+selinux_enabled: true
+selinux_reboot_machine: false
