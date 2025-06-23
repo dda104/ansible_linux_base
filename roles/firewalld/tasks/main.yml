@@ -17,7 +17,7 @@
             zone: "{{ item.name }}"
             target: "{{ item.target | default(omit) }}"
             state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
-            permanent: "{{ item | default(false) | ternary('present', 'absent') }}"
+            permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
 
         - name: Manage interfaces
@@ -25,7 +25,7 @@
             interface: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+            permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - "{{ firewalld_zones.interfaces }}"
@@ -36,7 +36,7 @@
             port: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+            permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - "{{ firewalld_zones.interfaces }}"
@@ -47,7 +47,7 @@
             service: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+            permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - "{{ firewalld_zones.services }}"
@@ -58,7 +58,7 @@
             rich_rule: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+            permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - "{{ firewalld_zones.rich_rules }}"
