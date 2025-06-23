@@ -1,37 +1,14 @@
 ---
-- name: Manage cockpit package
-  ansible.builtin.package:
-    name: cockpit
-    state: "{{ cockpit_destroy | ternary('absent', 'present') }}"
-    update_cache: true
-  become: true
-
-- name: Start and enable cockpit
+- name: Manage cockpit service
+  when: not cockpit_package_present
   ansible.builtin.service:
     name: cockpit
-    state: started
-    enabled: true
+    state: "{{ cockpit_service_enabled | ternary('started', 'stopped') }}"
+    enabled: "{{ cockpit_service_enabled }}"
   become: true
 
-- name: Manage directory for the certificates
+- name: Absent motd cockpit
+  when: cockpit_motd_absent
   ansible.builtin.file:
-    path: "{{ cockpit_cert_dir }}"
-    state: "{{ cockpit_destroy | ternary('absent', 'directory') }}"
-    mode: "0644"
-  become: true
-
-- name: Create certificates
-  when:
-    - not cockpit_destroy
-    - not cockpit_cert_key is none
-    - not cockpit_cert_crt is none
-  ansible.builtin.copy:
-    content: "{{ item.content }}"
-    dest: "{{ cockpit_cert_dir }}/{{ item.dest }}"
-    mode: "0644"
-  loop:
-    - content: "{{ cockpit_cert_key }}"
-      dest: cert.key
-    - content: "{{ cockpit_cert_crt }}"
-      dest: cert.crt
-  become: true
+    name: /etc/motd.d/cockpit
+    state: absent

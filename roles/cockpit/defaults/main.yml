@@ -1,9 +1,4 @@
 ---
-cockpit_debug: false
-cockpit_destroy: false
-
-cockpit_port: 9090
-cockpit_disabled_users_login: root
-cockpit_cert_dir: /etc/cockpit/ws-certs.d
-cockpit_cert_key: !!null
-cockpit_cert_crt: !!null
+cockpit_package_present: true
+cockpit_service_enabled: true
+cockpit_motd_absent: false

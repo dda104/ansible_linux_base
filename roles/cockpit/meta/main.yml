@@ -1,5 +1,10 @@
 ---
-dependencies: []
+dependencies:
+  - role: dda104.linux_base.packages
+    vars:
+      packages_list:
+        - name: cockpit
+          state: "{{ cockpit_package_present | ternary('present', 'absent') }}"
 
 galaxy_info:
   role_name: cockpit
