@@ -4,7 +4,7 @@ firewalld_reboot_machine: false
 
 firewalld_zones: []
 # firewalld_zones:
-#   - name: m75q2
+#   - name: public
 #     target: DROP
 #     present: true
 #     permanent: true
