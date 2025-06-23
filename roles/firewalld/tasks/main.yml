@@ -39,7 +39,7 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - interfaces
+            - ports
 
         - name: Manage services
           when: firewalld_enabled
