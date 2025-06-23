@@ -1,10 +1,11 @@
 ---
 - name: Manage cockpit service
   when: not cockpit_package_present
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: cockpit
     state: "{{ cockpit_service_enabled | ternary('started', 'stopped') }}"
     enabled: "{{ cockpit_service_enabled }}"
+    masked: "{{ not cockpit_service_enabled }}"
   become: true
 
 - name: Absent motd cockpit
