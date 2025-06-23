@@ -1,6 +1,5 @@
 ---
-dependencies:
-  - dda104.linux_base.selinux
+dependencies: []
 
 galaxy_info:
   role_name: packages
