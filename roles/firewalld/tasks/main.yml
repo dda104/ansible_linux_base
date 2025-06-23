@@ -9,10 +9,56 @@
         enabled: "{{ firewalld_enabled }}"
       notify: Restart machine
 
-    - name: Manage ports
+    - name: Manage firewalld rules
       when: firewalld_enabled
-      ansible.posix.firewalld:
-        port: "{{ item.port }}"
-        permanent: "{{ item.permanent | default(true) }}"
-        state: "{{ item.state | default('enabled') }}"
-      loop: "{{ firewalld_ports_list }}"
+      block:
+        - name: Manage zones
+          ansible.posix.firewalld:
+            zone: "{{ item.name }}"
+            target: "{{ item.target | default(omit) }}"
+            state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
+            permanent: "{{ item | default(false) | ternary('present', 'absent') }}"
+          with_items: "{{ firewalld_zones }}"
+
+        - name: Manage interfaces
+          ansible.posix.firewalld:
+            interface: "{{ item.1.name }}"
+            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            zone: "{{ item.0.name }}"
+            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+          with_subelements:
+            - "{{ firewalld_zones }}"
+            - "{{ firewalld_zones.interfaces }}"
+
+        - name: Manage ports
+          when: firewalld_enabled
+          ansible.posix.firewalld:
+            port: "{{ item.1.name }}"
+            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            zone: "{{ item.0.name }}"
+            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+          with_subelements:
+            - "{{ firewalld_zones }}"
+            - "{{ firewalld_zones.interfaces }}"
+
+        - name: Manage services
+          when: firewalld_enabled
+          ansible.posix.firewalld:
+            service: "{{ item.1.name }}"
+            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            zone: "{{ item.0.name }}"
+            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+          with_subelements:
+            - "{{ firewalld_zones }}"
+            - "{{ firewalld_zones.services }}"
+
+        - name: Manage rich rules
+          when: firewalld_enabled
+          ansible.posix.firewalld:
+            rich_rule: "{{ item.1.name }}"
+            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            zone: "{{ item.0.name }}"
+            permanent: "{{ item.1.permanent | default(false) | ternary('present', 'absent') }}"
+          with_subelements:
+            - "{{ firewalld_zones }}"
+            - "{{ firewalld_zones.rich_rules }}"
