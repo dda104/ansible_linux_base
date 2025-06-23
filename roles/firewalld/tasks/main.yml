@@ -23,7 +23,7 @@
         - name: Manage interfaces
           ansible.posix.firewalld:
             interface: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -34,7 +34,7 @@
           when: firewalld_enabled
           ansible.posix.firewalld:
             port: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -45,7 +45,7 @@
           when: firewalld_enabled
           ansible.posix.firewalld:
             service: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -56,7 +56,7 @@
           when: firewalld_enabled
           ansible.posix.firewalld:
             rich_rule: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
