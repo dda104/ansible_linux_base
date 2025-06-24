@@ -80,11 +80,12 @@
           ansible.builtin.meta: flush_handlers
 
     - name: Switch interface zone
+      when: item.1.present
       community.general.nmcli:
         type: ethernet
         conn_name: "{{ item.1.name }}"
         zone: "{{ item.0.name }}"
-        state: "{{ item.1.present | default(true) | ternary('present', 'absent') }}"
+        state: present
       with_subelements:
         - "{{ firewalld_zones }}"
         - interfaces
