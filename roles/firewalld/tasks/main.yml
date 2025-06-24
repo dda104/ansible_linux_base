@@ -14,17 +14,12 @@
       notify: Reload firewalld
       block:
         - name: Manage zones
+          notify: Reload firewalld zones
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
             state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
             permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
-
-        - name: Reload firewalld zones
-          when: firewalld_reload or firewalld_reload_zones
-          ansible.builtin.service:
-            name: firewalld
-            state: reloaded
 
         - name: Manage zones target
           ansible.posix.firewalld:

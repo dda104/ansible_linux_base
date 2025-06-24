@@ -7,8 +7,10 @@ Role for configure firewalld
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
   - [firewalld_enabled](#firewalld_enabled)
-  - [firewalld_ports_list](#firewalld_ports_list)
   - [firewalld_reboot_machine](#firewalld_reboot_machine)
+  - [firewalld_reload](#firewalld_reload)
+  - [firewalld_reload_zones](#firewalld_reload_zones)
+  - [firewalld_zones](#firewalld_zones)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -26,15 +28,7 @@ Role for configure firewalld
 #### Default value
 
 ```YAML
-firewalld_enabled: false
-```
-
-### firewalld_ports_list
-
-#### Default value
-
-```YAML
-firewalld_ports_list: []
+firewalld_enabled: true
 ```
 
 ### firewalld_reboot_machine
@@ -42,14 +36,36 @@ firewalld_ports_list: []
 #### Default value
 
 ```YAML
-firewalld_reboot_machine: true
+firewalld_reboot_machine: false
 ```
 
+### firewalld_reload
 
+#### Default value
+
+```YAML
+firewalld_reload: false
+```
+
+### firewalld_reload_zones
+
+#### Default value
+
+```YAML
+firewalld_reload_zones: false
+```
+
+### firewalld_zones
+
+#### Default value
+
+```YAML
+firewalld_zones: []
+```
 
 ## Dependencies
 
-None.
+- dda104.linux_base.packages
 
 ## License
 

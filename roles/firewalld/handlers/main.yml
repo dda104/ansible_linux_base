@@ -1,4 +1,10 @@
 ---
+- name: Reload firewalld zones
+  when: firewalld_reload or firewalld_reload_zones
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
+
 - name: Reload firewalld
   when: firewalld_reload
   ansible.builtin.service:
