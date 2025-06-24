@@ -21,9 +21,7 @@
           with_items: "{{ firewalld_zones }}"
 
         - name: Manage interfaces
-          when:
-            - interfaces is defined
-            - item.1.name is defined
+          when: item.1.name is defined
           ansible.posix.firewalld:
             interface: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
@@ -31,12 +29,10 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - interfaces
+            - interfaces | default([])
 
         - name: Manage ports
-          when:
-            - ports is defined
-            - item.1.name is defined
+          when: item.1.name is defined
           ansible.posix.firewalld:
             port: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
@@ -44,12 +40,10 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - ports
+            - ports | default([])
 
         - name: Manage services
-          when:
-            - services is defined
-            - item.1.name is defined
+          when: item.1.name is defined
           ansible.posix.firewalld:
             service: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
@@ -57,12 +51,10 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - services
+            - services | default([])
 
         - name: Manage rich rules
-          when:
-            - rich_rules is defined
-            - item.1.name is defined
+          when: item.1.name is defined
           ansible.posix.firewalld:
             rich_rule: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
@@ -70,4 +62,4 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - rich_rules
+            - rich_rules | default([])
