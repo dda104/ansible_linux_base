@@ -1,4 +1,10 @@
 ---
+- name: Reload firewalld
+  when: firewalld_reload
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded
+
 - name: Restart machine
   when: firewalld_reboot_machine
   ansible.builtin.reboot:

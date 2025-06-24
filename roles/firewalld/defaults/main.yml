@@ -1,6 +1,7 @@
 ---
 firewalld_enabled: true
 firewalld_reboot_machine: false
+firewalld_reload: false
 
 firewalld_zones: []
 # firewalld_zones:
