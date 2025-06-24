@@ -24,6 +24,6 @@ firewalld_zones: []
 #         present: true
 #         permanent: true
 #     rich_rules:
-#       - name: rule family=ipv4 source address 192.168.0.50/32 service name="ssh" accept
+#       - name: rule family=ipv4 source address=192.168.0.50/32 service name="ssh" accept
 #         present: true
 #         permanent: true

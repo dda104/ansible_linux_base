@@ -21,6 +21,7 @@
           with_items: "{{ firewalld_zones }}"
 
         - name: Manage interfaces
+          when: item.1.name is defined
           ansible.posix.firewalld:
             interface: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
@@ -31,7 +32,7 @@
             - interfaces
 
         - name: Manage ports
-          when: firewalld_enabled
+          when: item.1.name is defined
           ansible.posix.firewalld:
             port: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
@@ -42,7 +43,7 @@
             - ports
 
         - name: Manage services
-          when: firewalld_enabled
+          when: item.1.name is defined
           ansible.posix.firewalld:
             service: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
@@ -53,7 +54,7 @@
             - services
 
         - name: Manage rich rules
-          when: firewalld_enabled
+          when: item.1.name is defined
           ansible.posix.firewalld:
             rich_rule: "{{ item.1.name }}"
             state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
