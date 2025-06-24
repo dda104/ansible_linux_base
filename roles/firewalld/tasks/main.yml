@@ -21,6 +21,9 @@
             permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
 
+        - name: Flush handlers
+          ansible.builtin.meta: flush_handlers
+
         - name: Manage zones target
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
