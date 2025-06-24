@@ -4,7 +4,7 @@ firewalld_reboot_machine: false
 
 firewalld_zones: []
 # firewalld_zones:
-#   - name: public
+#   - name: FedoraServer
 #     target: DROP
 #     present: true
 #     permanent: true
@@ -12,16 +12,16 @@ firewalld_zones: []
 #       - name: "{{ ansible_default_ipv4.interface }}"
 #         present: true
 #         permanent: true
-#     ports:
-#       - name: 80/tcp
-#         present: true
-#         permanent: true
-#       - name: 443/tcp
-#         present: true
-#         permanent: true
+#     ports: []
 #     services:
 #       - name: ssh
 #         present: true
+#         permanent: true
+#       - name: cockpit
+#         present: false
+#         permanent: true
+#       - name: dhcpv6-client
+#         present: false
 #         permanent: true
 #     rich_rules:
 #       - name: rule family=ipv4 source address=192.168.0.50/32 service name="ssh" accept

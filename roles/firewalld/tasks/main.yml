@@ -29,7 +29,7 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - interfaces | default([])
+            - interfaces
 
         - name: Manage ports
           when: item.1.name is defined
@@ -40,7 +40,7 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - ports | default([])
+            - ports
 
         - name: Manage services
           when: item.1.name is defined
@@ -51,7 +51,7 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - services | default([])
+            - services
 
         - name: Manage rich rules
           when: item.1.name is defined
@@ -62,4 +62,4 @@
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
-            - rich_rules | default([])
+            - rich_rules

@@ -1,7 +1,7 @@
 ---
 namespace: dda104
 name: linux_base
-version: 1.8.7
+version: 1.8.8
 readme: README.md
 authors:
   - Denis Dvornikov
