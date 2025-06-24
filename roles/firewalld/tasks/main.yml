@@ -17,13 +17,20 @@
           notify: Reload firewalld
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
-            target: "{{ item.target | default(omit) }}"
             state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
             permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
 
         - name: Flush handlers
           ansible.builtin.meta: flush_handlers
+
+        - name: Manage zones target
+          ansible.posix.firewalld:
+            zone: "{{ item.name }}"
+            target: "{{ item.target | default(omit) }}"
+            state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
+            permanent: "{{ item.permanent | default(false) }}"
+          with_items: "{{ firewalld_zones }}"
 
         - name: Manage interfaces
           when: item.1.name is defined
