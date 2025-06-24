@@ -75,3 +75,6 @@
           with_subelements:
             - "{{ firewalld_zones }}"
             - rich_rules
+
+        - name: Flush handlers
+          ansible.builtin.meta: flush_handlers
