@@ -1,0 +1,131 @@
+---
+argument_specs:
+  main:
+    short_description: Role for configure firewalld_zones
+    version_added: 1.8.16
+    author: Denis Dvornikov
+    options:
+      firewalld_enabled:
+        description: Enable firewalld
+        type: bool
+        default: true
+
+      firewalld_reboot_machine:
+        description: Reboot machine
+        type: bool
+        default: false
+
+      firewalld_reload:
+        description: Reload firewalld config
+        type: bool
+        default: false
+
+      firewalld_reload_zones:
+        description: Reload firewalld config after change zones only
+        type: bool
+        default: false
+
+      firewalld_zones:
+        description: List zones
+        type: list
+        elements: dict
+        default: []
+        options:
+          name:
+            description: Zone name
+            type: str
+
+          target:
+            description: Zone target
+            type: str
+            choices:
+              - default
+              - ACCEPT
+              - DROP
+              - REJECT
+
+          present:
+            description: Create zone
+            type: bool
+            default: true
+
+          permanent:
+            description: Permanent option
+            type: bool
+            default: false
+
+          ports:
+            description: List ports
+            type: list
+            elements: dict
+            required: true
+            options:
+              name:
+                description: Port name
+                type: str
+              present:
+                description: Create port
+                type: bool
+                default: true
+              permanent:
+                description: Permanent option
+                type: bool
+                default: false
+
+          services:
+            description: List services
+            type: list
+            elements: dict
+            required: true
+            options:
+              name:
+                description: Service name
+                type: str
+              present:
+                description: Create service
+                type: bool
+                default: true
+              permanent:
+                description: Permanent option
+                type: bool
+                default: false
+
+          rich_rules:
+            description: List rich_rules
+            type: list
+            elements: dict
+            required: true
+            options:
+              name:
+                description: Rich rule name
+                type: str
+              present:
+                description: Create rich rule
+                type: bool
+                default: true
+              permanent:
+                description: Permanent option
+                type: bool
+                default: false
+
+          interfaces:
+            description: List interfaces
+            type: list
+            elements: dict
+            required: true
+            options:
+              name:
+                description: Interface name
+                type: str
+              present:
+                description: Create zone in interface
+                type: bool
+                default: true
+              permanent:
+                description: Permanent option
+                type: bool
+                default: false
+              switch_zone:
+                description: Change zone on nmcli interface
+                type: bool
+                default: omit

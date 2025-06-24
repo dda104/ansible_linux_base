@@ -14,15 +14,17 @@
       notify: Reload firewalld
       block:
         - name: Manage zones
-          notify: Reload firewalld
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
             state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
             permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
 
-        - name: Flush handlers
-          ansible.builtin.meta: flush_handlers
+        - name: Reload firewalld zones
+          when: firewalld_reload or firewalld_reload_zones
+          ansible.builtin.service:
+            name: firewalld
+            state: reloaded
 
         - name: Manage zones target
           ansible.posix.firewalld:
@@ -80,7 +82,9 @@
           ansible.builtin.meta: flush_handlers
 
     - name: Switch interface zone
-      when: item.1.present
+      when:
+        - item.1.present
+        - item.1.switch_zone
       community.general.nmcli:
         type: ethernet
         conn_name: "{{ item.1.name }}"
