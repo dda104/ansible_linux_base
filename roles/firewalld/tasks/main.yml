@@ -32,18 +32,6 @@
             permanent: "{{ item.permanent | default(false) }}"
           with_items: "{{ firewalld_zones }}"
 
-        - name: Manage interfaces
-          when: item.1.name is defined
-          ansible.posix.firewalld:
-            interface: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
-            zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) }}"
-            immediate: "{{ item.1.immediate | default(false) }}"
-          with_subelements:
-            - "{{ firewalld_zones }}"
-            - interfaces
-
         - name: Manage ports
           when: item.1.name is defined
           ansible.posix.firewalld:
@@ -76,6 +64,18 @@
           with_subelements:
             - "{{ firewalld_zones }}"
             - rich_rules
+
+        - name: Manage interfaces
+          when: item.1.name is defined
+          notify: Switch interface zone
+          ansible.posix.firewalld:
+            interface: "{{ item.1.name }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
+            zone: "{{ item.0.name }}"
+            permanent: "{{ item.1.permanent | default(false) }}"
+          with_subelements:
+            - "{{ firewalld_zones }}"
+            - interfaces
 
         - name: Flush handlers
           ansible.builtin.meta: flush_handlers
