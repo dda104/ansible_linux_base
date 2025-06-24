@@ -21,10 +21,12 @@
           with_items: "{{ firewalld_zones }}"
 
         - name: Manage interfaces
-          when: item.1.name is defined
+          when:
+            - interfaces is defined
+            - item.1.name is defined
           ansible.posix.firewalld:
             interface: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -32,10 +34,12 @@
             - interfaces
 
         - name: Manage ports
-          when: item.1.name is defined
+          when:
+            - ports is defined
+            - item.1.name is defined
           ansible.posix.firewalld:
             port: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -43,10 +47,12 @@
             - ports
 
         - name: Manage services
-          when: item.1.name is defined
+          when:
+            - services is defined
+            - item.1.name is defined
           ansible.posix.firewalld:
             service: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
@@ -54,10 +60,12 @@
             - services
 
         - name: Manage rich rules
-          when: item.1.name is defined
+          when:
+            - rich_rules is defined
+            - item.1.name is defined
           ansible.posix.firewalld:
             rich_rule: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disbled') }}"
+            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
             permanent: "{{ item.1.permanent | default(false) }}"
           with_subelements:
