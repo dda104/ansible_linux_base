@@ -128,4 +128,3 @@ argument_specs:
               switch_zone:
                 description: Change zone on nmcli interface
                 type: bool
-                default: omit
