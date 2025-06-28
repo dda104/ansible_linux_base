@@ -1,0 +1,4 @@
+---
+asdf_version: 0.18.0
+asdf_os_arch: linux-amd64
+asdf_shellrc_file: ~/.bashrc

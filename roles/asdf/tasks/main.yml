@@ -1,0 +1,16 @@
+---
+- name: Download asdf
+  ansible.builtin.unarchive:
+    src: https://github.com/asdf-vm/asdf/releases/download/v{{ asdf_version }}/asdf-v{{ asdf_version }}-{{ asdf_os_arch }}.tar.gz
+    dest: /usr/bin/
+    remote_src: true
+    mode: '0751'
+  become: true
+
+- name: Add asdf into PATH
+  ansible.builtin.blockinfile:
+    path: "{{ asdf_shellrc_file }}"
+    block: |
+      export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+      . <(asdf completion bash)
+    marker: "# {mark} asdf"

@@ -8,6 +8,12 @@
         state: present
         update_cache: true
 
+    - name: Snapd service enabled and started
+      service:
+        name: snapd
+        state: started
+        enabled: true
+
     - name: Manage snap packages
       community.general.snap:
         name: "{{ item.name }}"

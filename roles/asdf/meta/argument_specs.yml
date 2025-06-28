@@ -1,0 +1,21 @@
+---
+argument_specs:
+  main:
+    short_description: Role for install asdf
+    version_added: 1.10.0
+    author: Denis Dvornikov
+    options:
+      asdf_version:
+        description: Version asdf
+        type: str
+        default: 0.18.0
+
+      asdf_os_arch:
+        description: OS type and arch
+        type: str
+        default: linux-amd64
+
+      asdf_shellrc_file:
+        description: Path to shellrc file
+        type: str
+        default: ~/.bashrc
