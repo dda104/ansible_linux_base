@@ -17,8 +17,8 @@
           notify: Reload firewalld zones
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
-            state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
-            permanent: "{{ item.permanent | default(false) }}"
+            state: "{{ item.present | d(true) | ternary('present', 'absent') }}"
+            permanent: "{{ item.permanent | d(false) }}"
           with_items: "{{ firewalld_zones }}"
 
         - name: Flush handlers
@@ -27,18 +27,18 @@
         - name: Manage zones target
           ansible.posix.firewalld:
             zone: "{{ item.name }}"
-            target: "{{ item.target | default(omit) }}"
-            state: "{{ item.present | default(true) | ternary('present', 'absent') }}"
-            permanent: "{{ item.permanent | default(false) }}"
+            target: "{{ item.target | d(omit) }}"
+            state: "{{ item.present | d(true) | ternary('present', 'absent') }}"
+            permanent: "{{ item.permanent | d(false) }}"
           with_items: "{{ firewalld_zones }}"
 
         - name: Manage ports
           when: item.1.name is defined
           ansible.posix.firewalld:
             port: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
+            state: "{{ item.1.present | d(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) }}"
+            permanent: "{{ item.1.permanent | d(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - ports
@@ -47,9 +47,9 @@
           when: item.1.name is defined
           ansible.posix.firewalld:
             service: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
+            state: "{{ item.1.present | d(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) }}"
+            permanent: "{{ item.1.permanent | d(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - services
@@ -58,9 +58,9 @@
           when: item.1.name is defined
           ansible.posix.firewalld:
             rich_rule: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
+            state: "{{ item.1.present | d(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) }}"
+            permanent: "{{ item.1.permanent | d(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - rich_rules
@@ -69,9 +69,9 @@
           when: item.1.name is defined
           ansible.posix.firewalld:
             interface: "{{ item.1.name }}"
-            state: "{{ item.1.present | default(true) | ternary('enabled', 'disabled') }}"
+            state: "{{ item.1.present | d(true) | ternary('enabled', 'disabled') }}"
             zone: "{{ item.0.name }}"
-            permanent: "{{ item.1.permanent | default(false) }}"
+            permanent: "{{ item.1.permanent | d(false) }}"
           with_subelements:
             - "{{ firewalld_zones }}"
             - interfaces

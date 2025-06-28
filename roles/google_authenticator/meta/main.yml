@@ -1,6 +1,5 @@
 ---
 dependencies:
-  - role: dda104.linux_base.pre_ansible
   - role: dda104.linux_base.packages
     vars:
       packages_list:

@@ -1,33 +1,10 @@
 ---
 - name: Manage packages
-  become: true
-  block:
-    - name: Upgrade all packages
-      when: not packages_skip_upgrade
-      ansible.builtin.package:
-        name: "*"
-        state: latest
-        update_cache: true
-      tags:
-        - skip_ansible_lint
+  when: |
+    packages_list | length or
+    not packages_skip_upgrade
+  ansible.builtin.include_tasks: package.yml
 
-    - name: Manage packages
-      ansible.builtin.package:
-        name: "{{ item.name }}"
-        state: "{{ item.state | default('present') }}"
-        update_cache: true
-      with_items: "{{ packages_list }}"
-
-    - name: Manage dnf packages
-      ansible.builtin.dnf:
-        name: "{{ item.name }}"
-        state: "{{ item.state | default('present') }}"
-        disable_gpg_check: "{{ disable_gpg_check | default(omit) }}"
-      with_items: "{{ packages_dnf_list }}"
-
-    - name: Manage snap packages
-      community.general.snap:
-        name: "{{ item.name }}"
-        state: "{{ item.state | default('present') }}"
-        classic: "{{ item.classic | default(omit) }}"
-      with_items: "{{ packages_snap_list }}"
+- name: Manage snap packages
+  when: packages_snap_list | length
+  ansible.builtin.include_tasks: snap.yml

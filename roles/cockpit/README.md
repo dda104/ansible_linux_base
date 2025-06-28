@@ -6,9 +6,9 @@ Role for configure cockpit
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
-  - [cockpit_cert_crt](#cockpit_cert_crt)
-  - [cockpit_cert_dir](#cockpit_cert_dir)
-  - [cockpit_cert_key](#cockpit_cert_key)
+  - [cockpit_motd_absent](#cockpit_motd_absent)
+  - [cockpit_package_present](#cockpit_package_present)
+  - [cockpit_service_enabled](#cockpit_service_enabled)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -21,35 +21,33 @@ Role for configure cockpit
 
 ## Default Variables
 
-### cockpit_cert_crt
+### cockpit_motd_absent
 
 #### Default value
 
 ```YAML
-cockpit_cert_crt:
+cockpit_motd_absent: false
 ```
 
-### cockpit_cert_dir
+### cockpit_package_present
 
 #### Default value
 
 ```YAML
-cockpit_cert_dir: /etc/cockpit/ws-certs.d
+cockpit_package_present: true
 ```
 
-### cockpit_cert_key
+### cockpit_service_enabled
 
 #### Default value
 
 ```YAML
-cockpit_cert_key:
+cockpit_service_enabled: true
 ```
-
-
 
 ## Dependencies
 
-None.
+- dda104.linux_base.packages
 
 ## License
 

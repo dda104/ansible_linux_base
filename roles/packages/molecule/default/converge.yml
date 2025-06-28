@@ -9,5 +9,5 @@
     packages_skip_upgrade: false
     packages_list:
       - name: vim
-        state: absent
+        present: false
       - name: git

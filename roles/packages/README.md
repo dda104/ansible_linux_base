@@ -8,7 +8,7 @@ Role for install and upgrade packages on Linux systems
 - [Default Variables](#default-variables)
   - [packages_list](#packages_list)
   - [packages_skip_upgrade](#packages_skip_upgrade)
-- [Discovered Tags](#discovered-tags)
+  - [packages_snap_list](#packages_snap_list)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -37,14 +37,17 @@ packages_list: []
 packages_skip_upgrade: true
 ```
 
-## Discovered Tags
+### packages_snap_list
 
-**_skip_ansible_lint_**
+#### Default value
 
+```YAML
+packages_snap_list: []
+```
 
 ## Dependencies
 
-- dda104.linux_base.pre_ansible
+None.
 
 ## License
 

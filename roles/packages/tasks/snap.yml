@@ -1,0 +1,16 @@
+---
+- name: Manage snap packages
+  become: true
+  block:
+    - name: Install snapd
+      ansible.builtin.package:
+        name: snapd
+        state: present
+        update_cache: true
+
+    - name: Manage snap packages
+      community.general.snap:
+        name: "{{ item.name }}"
+        state: "{{ item.present | d(true) | ternary('present', 'absent') }}"
+        classic: "{{ item.classic | d(omit) }}"
+      with_items: "{{ packages_snap_list }}"

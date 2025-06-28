@@ -1,6 +1,0 @@
----
-- name: Include tasks for dnf based systems
-  when: |
-    ansible_pkg_mgr == "dnf5" or
-    ansible_pkg_mgr == "dnf"
-  ansible.builtin.include_tasks: dnf.yml

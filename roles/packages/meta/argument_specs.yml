@@ -15,13 +15,21 @@ argument_specs:
             description: Package name
             type: str
             required: true
-          state:
+          present:
             description: Package state
-            type: str
-            choices:
-              - present
-              - absent
-            default: present
+            version_added: 1.9.0
+            type: bool
+            default: true
+          update_cache:
+            description: Option update_cache
+            version_added: 1.9.0
+            type: bool
+            default: omit
+          disable_gpg_check:
+            description: Option disable_gpg_check
+            version_added: 1.9.0
+            type: bool
+            default: omit
 
       packages_snap_list:
         description: List of ansp packages to install
@@ -34,39 +42,16 @@ argument_specs:
             description: Package name
             type: str
             required: true
-          state:
+          present:
             description: Package state
-            type: str
-            choices:
-              - present
-              - absent
-            default: present
+            version_added: 1.9.0
+            type: bool
+            default: true
           classic:
             description: Use option classic
             version_added: 1.4.5
             type: bool
-
-      packages_dnf_list:
-        description: List of dnf packages to install
-        version_added: 1.5.0
-        type: list
-        elements: dict
-        default: []
-        options:
-          name:
-            description: Package name
-            type: str
-            required: true
-          state:
-            description: Package state
-            type: str
-            choices:
-              - present
-              - absent
-            default: present
-          disable_gpg_check:
-            description: Use option disable_gpg_check
-            type: bool
+            default: omit
 
       packages_skip_upgrade:
         description: Upgrade all packages

@@ -27,8 +27,6 @@ Role for manage users
 users_list: []
 ```
 
-
-
 ## Dependencies
 
 None.
