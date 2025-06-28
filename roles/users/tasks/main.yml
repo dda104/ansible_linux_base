@@ -6,7 +6,7 @@
       ansible.builtin.user:
         name: "{{ item.name }}"
         password: "{{ item.password | d(omit) }}"
-        present: "{{ item.present | d(true) | ternary('enabled', 'disabled') }}"
+        state: "{{ item.present | d(true) | ternary('enabled', 'disabled') }}"
         uid: "{{ item.uid | d(omit) }}"
       loop: "{{ users_list }}"
 
