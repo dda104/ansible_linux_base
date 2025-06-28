@@ -2,13 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: packages
-  description: Role for install and upgrade packages on Linux systems
-  company: ""
-  namespace: internal
+  description: Role for install packages
   license: Unlicense
   min_ansible_version: "2.11"
   author: Denis Dvornikov
-  galaxy_tags:
-    - linux
-    - packages

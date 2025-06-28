@@ -9,7 +9,7 @@
         update_cache: true
 
     - name: Snapd service enabled and started
-      service:
+      ansible.builtin.service:
         name: snapd
         state: started
         enabled: true

@@ -1,56 +1,37 @@
 ---
 argument_specs:
   main:
-    short_description: Role for installing and upgrading packages
-    version_added: 1.0.0
-    author: Denis Dvornikov
     options:
       packages_list:
-        description: List of packages to install
         type: list
         elements: dict
-        default: []
         options:
           name:
-            description: Package name
             type: str
             required: true
+
           present:
-            description: Package state
-            version_added: 1.9.0
             type: bool
-            default: true
+
           update_cache:
-            description: Option update_cache
-            version_added: 1.9.0
             type: bool
+
           disable_gpg_check:
-            description: Option disable_gpg_check
-            version_added: 1.9.0
             type: bool
 
       packages_snap_list:
-        description: List of ansp packages to install
-        version_added: 1.4.4
         type: list
         elements: dict
-        default: []
         options:
           name:
-            description: Package name
             type: str
             required: true
+
           present:
-            description: Package state
-            version_added: 1.9.0
             type: bool
-            default: true
+
           classic:
-            description: Use option classic
-            version_added: 1.4.5
             type: bool
 
       packages_skip_upgrade:
-        description: Upgrade all packages
         type: bool
-        default: true

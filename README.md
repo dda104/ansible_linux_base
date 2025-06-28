@@ -8,9 +8,9 @@ Create requirements.yml:
 ---
 collections:
   - name: dda104.linux_base
-    source: https://gitlab.com/ansible_public/dda104.linux_base
+    source: git@gitlab.com:dda104/linux_base.git
     type: git
-    version: 1.2.1
+    version: 1.10.0
 ```
 
 Install collection via uv:

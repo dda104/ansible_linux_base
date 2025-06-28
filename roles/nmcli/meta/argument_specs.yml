@@ -1,0 +1,18 @@
+---
+argument_specs:
+  main:
+    options:
+      nmcli_conn_name:
+        type: str
+
+      nmcli_ifname:
+        type: str
+
+      nmcli_gw4:
+        type: str
+
+      nmcli_dns4:
+        type: str
+
+      nmcli_restart_network_manager:
+        type: bool

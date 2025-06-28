@@ -1,34 +1,23 @@
 ---
 argument_specs:
   main:
-    short_description: Role for manage users
-    version_added: 1.0.0
-    author: Denis Dvornikov
     options:
       users_list:
-        description: List of users with their details
         type: list
         elements: dict
         options:
           name:
-            description: Name of the user
             type: str
             required: true
+
           password:
-            description: The password for the user
             type: str
-            default: '!'
-          state:
-            description: The state of the user (present/absent)
-            type: str
-            choices:
-              - present
-              - absent
-            default: present
-          uid:
-            description: The UID for the user
-            type: int
-          sudo:
-            description: Whether the user should have sudo privileges
+
+          present:
             type: bool
-            default: false
+
+          uid:
+            type: int
+
+          sudo:
+            type: bool

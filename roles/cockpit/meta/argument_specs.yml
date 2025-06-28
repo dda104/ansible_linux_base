@@ -1,0 +1,12 @@
+---
+argument_specs:
+  main:
+    options:
+      cockpit_package_present:
+        type: bool
+
+      cockpit_service_enabled:
+        type: bool
+
+      cockpit_motd_absent:
+        type: bool

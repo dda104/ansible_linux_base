@@ -1,23 +1,11 @@
 ---
 namespace: dda104
 name: linux_base
-version: 1.10.0
+version: 1.11.0
 readme: README.md
 authors:
   - Denis Dvornikov
 description: Collection for managing Linux systems
 license:
   - Unlicense
-tags:
-  - linux
-  - linux_base
-  - users
-  - packages
-  - cockpit
-  - firewalld
-  - hostname
-  - selinux
-  - nmcli
-  - authentificator
-dependencies: {}
 repository: https://gitlab.com/dda104/linux_base

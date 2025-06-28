@@ -6,13 +6,7 @@ dependencies:
         - name: google-authenticator
 
 galaxy_info:
-  role_name: google_authenticator
-  description: Role for configure auth via google_authenticator
-  company: ""
-  namespace: internal
+  description: Role for configure auth via otp
   license: Unlicense
   min_ansible_version: "2.11"
   author: Denis Dvornikov
-  galaxy_tags:
-    - linux
-    - authenticator

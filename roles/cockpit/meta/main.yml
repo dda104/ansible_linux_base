@@ -7,20 +7,7 @@ dependencies:
           state: "{{ cockpit_package_present | ternary('present', 'absent') }}"
 
 galaxy_info:
-  role_name: cockpit
-  description: Role for configure cockpit
-  company: ""
-  namespace: internal
+  description: Role for manage cockpit
   license: Unlicense
   min_ansible_version: "2.11"
   author: Denis Dvornikov
-  platforms:
-    - name: Fedora
-      versions:
-        - '40'
-    - name: Ubuntu
-      versions:
-        - noble
-  galaxy_tags:
-    - linux
-    - cockpit

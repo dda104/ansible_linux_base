@@ -1,0 +1,15 @@
+---
+argument_specs:
+  main:
+    options:
+      google_authenticator_user:
+        type: str
+
+      google_authenticator_user_home:
+        type: str
+
+      google_authenticator_ssh_allow_additional_users:
+        type: str
+
+      google_authenticator_additional_ssh_config:
+        type: str

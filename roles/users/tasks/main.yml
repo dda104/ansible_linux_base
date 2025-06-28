@@ -5,15 +5,15 @@
     - name: Create and delete users
       ansible.builtin.user:
         name: "{{ item.name }}"
-        password: "{{ item.password if item.password is defined else omit }}"
-        state: "{{ item.state | d('present') }}"
-        uid: "{{ item.uid if item.uid is defined else omit }}"
+        password: "{{ item.password | d(omit) }}"
+        present: "{{ item.present | d(true) | ternary('enabled', 'disabled') }}"
+        uid: "{{ item.uid | d(omit) }}"
       loop: "{{ users_list }}"
 
     - name: Add user sudo
       when:
         - item.sudo | d(false)
-        - item.state | d('present') == 'present'
+        - item.present | d(true)
       ansible.builtin.copy:
         content: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
         dest: "/etc/sudoers.d/{{ item.name }}"
@@ -21,9 +21,9 @@
       loop: "{{ users_list }}"
 
     - name: Remove user sudo
-      when: >
+      when: |
         not item.sudo | d(false) or
-        item.state | d('present') == 'absent'
+        not item.present
       ansible.builtin.file:
         dest: "/etc/sudoers.d/{{ item.name }}"
         state: absent

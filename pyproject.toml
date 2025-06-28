@@ -1,7 +1,7 @@
 [project]
 name = "dda104-linux-base"
 version = "0.1.0"
-description = "Add your description here"
+description = "dda104-linux-base"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
