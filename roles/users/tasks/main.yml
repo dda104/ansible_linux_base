@@ -23,7 +23,7 @@
     - name: Remove user sudo
       when: |
         not item.sudo | d(false) or
-        not item.present
+        not item.present | d(true)
       ansible.builtin.file:
         dest: "/etc/sudoers.d/{{ item.name }}"
         state: absent
