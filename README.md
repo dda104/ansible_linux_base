@@ -1,5 +1,7 @@
 # Collection dda104.linux_base
 
+TODO: fix gather var in nmcli role argument specs
+
 ## Usage
 
 Create requirements.yml:
