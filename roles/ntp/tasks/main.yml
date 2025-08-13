@@ -1,0 +1,4 @@
+---
+- name: Include ntp role
+  ansible.builtin.include_role:
+    name: geerlingguy.ntp

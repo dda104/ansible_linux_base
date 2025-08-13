@@ -1,10 +1,5 @@
 ---
-dependencies:
-  - role: geerlingguy.ntp
-    vars:
-      ntp_timezone: "{{ vars['ntp_timezone'] }}"
-      ntp_manage_config: "{{ vars['ntp_manage_config'] }}"
-      ntp_servers: "{{ vars['ntp_servers'] }}"
+dependencies: []
 
 galaxy_info:
   description: Role for configure ntp
