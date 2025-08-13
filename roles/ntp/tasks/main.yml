@@ -1,5 +1,4 @@
 ---
 - name: Include ntp role
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: geerlingguy.ntp
-    public: true
