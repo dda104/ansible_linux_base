@@ -1,0 +1,9 @@
+---
+ntp_timezone: Asia/Yekaterinburg
+ntp_manage_config: true
+ntp_servers:
+  - "ntp1.vniiftri.ru iburst"
+  - "0.ru.pool.ntp.org iburst"
+  - "1.ru.pool.ntp.org iburst"
+  - "2.ru.pool.ntp.org iburst"
+  - "3.ru.pool.ntp.org iburst"

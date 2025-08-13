@@ -1,0 +1,12 @@
+---
+argument_specs:
+  main:
+    options:
+      ntp_timezone:
+        type: str
+
+      ntp_manage_config:
+        type: bool
+
+      ntp_servers:
+        type: list
