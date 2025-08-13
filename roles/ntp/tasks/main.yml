@@ -2,3 +2,4 @@
 - name: Include ntp role
   ansible.builtin.include_role:
     name: geerlingguy.ntp
+    vars_from: main
