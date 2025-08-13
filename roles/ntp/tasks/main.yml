@@ -1,4 +1,10 @@
 ---
+- name: Set fact
+  ansible.builtin.set_fact:
+    ntp_timezone: "{{ ntp_timezone }}"
+    ntp_manage_config: "{{ ntp_manage_config }}"
+    ntp_servers: "{{ ntp_servers }}"
+
 - name: Include ntp role
   ansible.builtin.import_role:
     name: geerlingguy.ntp
