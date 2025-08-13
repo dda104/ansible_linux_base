@@ -1,8 +1,5 @@
 ---
-- name: Set fact default vars
-  set_fact: "{{ item.key }} = {{ lookup('vars', item.key, default = item.value) }}"
-  with_dict: "{{ defaults }}"
-
 - name: Include ntp role
   ansible.builtin.include_role:
     name: geerlingguy.ntp
+    public: true
